@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import { verifyEmail } from "@/lib/api";
 
 function VerifyEmailClient() {
   const searchParams = useSearchParams();
@@ -17,11 +18,13 @@ function VerifyEmailClient() {
 
     const verify = async () => {
       try {
-        const res = await fetch(`/api/verify-email?token=${token}`);
-        const data = await res.json();
-        setMessage(data.message);
-      } catch (e) {
-        setMessage("Verification failed.");
+        const data = await verifyEmail(token);
+        setMessage(data.message || "Email verified successfully.");
+      } catch (e: any) {
+        console.error("Verification error:", e);
+        setMessage(
+          e?.response?.data?.message || "Verification failed. Please try again."
+        );
       }
     };
 
