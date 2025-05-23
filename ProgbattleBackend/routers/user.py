@@ -51,6 +51,7 @@ def register(user: UserRegister, db: Session = Depends(get_db)):
     db.refresh(new_user)
     
     token = generate_verification_token(new_user.email)
+    print(token)
     send_verification_email.delay(new_user.email, token)
 
     return {"message": "Registered successfully, please verify your email", "user_id": new_user.id}

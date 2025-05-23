@@ -27,6 +27,8 @@ celery_app = Celery(__name__, broker="redis://localhost:6379/0", backend="redis:
 
 @celery_app.task
 def send_verification_email(email: str, token: str):
+    print(f"Sending verification email to {email}")
+    print(f"user: {SMTP_USER}")
     link = f"{FRONTEND_URL}/verify-email?token={token}"
     message = EmailMessage()
     message.set_content(f"Click the link to verify your email: {link}")
@@ -34,7 +36,7 @@ def send_verification_email(email: str, token: str):
     message["From"] = "ProgBattle <verify@progbattle.pclub>"
     message["To"] = email
 
-    with smtplib.SMTP("smtp.google.com", 587) as smtp:
+    with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
         smtp.starttls()
         smtp.login(SMTP_USER, SMTP_PASSWORD)
         smtp.send_message(message)
