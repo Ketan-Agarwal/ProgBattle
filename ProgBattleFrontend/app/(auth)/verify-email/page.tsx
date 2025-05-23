@@ -1,37 +1,40 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { verifyEmail } from "@/lib/api"; // Adjust path as needed
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
-export default function VerifyEmailPage() {
+function VerifyEmailClient() {
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const [status, setStatus] = useState("Verifying...");
+  const token = searchParams.get("token");
+
+  const [message, setMessage] = useState("Verifying...");
 
   useEffect(() => {
-    const token = searchParams.get("token");
     if (!token) {
-      setStatus("❌ Invalid or missing token.");
+      setMessage("No token found.");
       return;
     }
 
     const verify = async () => {
       try {
-        await verifyEmail(token);
-        setStatus("✅ Email verified successfully!");
-        setTimeout(() => router.push("/login"), 3000);
-      } catch (err: any) {
-        setStatus("❌ Verification failed. " + (err?.response?.data?.detail || err.message || "Unknown error"));
+        const res = await fetch(`/api/verify-email?token=${token}`);
+        const data = await res.json();
+        setMessage(data.message);
+      } catch (e) {
+        setMessage("Verification failed.");
       }
     };
 
     verify();
-  }, [searchParams, router]);
+  }, [token]);
 
+  return <div className="p-4 text-center">{message}</div>;
+}
+
+export default function Page() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <h1 className="text-2xl font-bold">{status}</h1>
-    </div>
+    <Suspense fallback={<div className="p-4 text-center">Loading...</div>}>
+      <VerifyEmailClient />
+    </Suspense>
   );
 }
