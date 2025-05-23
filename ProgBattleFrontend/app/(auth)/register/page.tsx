@@ -7,13 +7,11 @@ import { toast } from "sonner";
 import Link from 'next/link'; // ← Add this
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [registered, setRegistered] = useState(false);
-  const [loading, setLoading] = useState(false);
   const isValidEmail = (email: string) => {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   };
@@ -37,7 +35,7 @@ export default function RegisterPage() {
     }
   
     try {
-      const data = await register(email, password);
+      await register(email, password);
       toast.loading("Registering...");
       toast.success("Registration successful! Check your email to verify your account.");
       setRegistered(true);
