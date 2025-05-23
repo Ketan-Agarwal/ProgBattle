@@ -1,0 +1,64 @@
+# Global ignores
+__pycache__/
+*.py[cod]
+*.so
+*.log
+*.db
+*.sqlite3
+
+# Python envs
+.venv/
+env/
+venv/
+ENV/
+
+# VSCode and other IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test cache
+.pytest_cache/
+.mypy_cache/
+coverage.xml
+.hypothesis/
+
+# Backup and swap
+*.swp
+*~
+*.bak
+*.tmp
+
+# Docker overrides
+docker-compose.override.yml
+*.local.yml
+
+# DB dumps
+*.sql
+
+# === BACKEND SPECIFIC ===
+backend/.env
+backend/.env.*
+backend/celerybeat-schedule
+backend/*.pid
+backend/instance/
+backend/staticfiles/
+backend/dist/
+backend/build/
+backend/local.db
+
+# === FRONTEND SPECIFIC ===
+frontend/.env
+frontend/.env.*
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.vercel/

@@ -1,0 +1,91 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { siteConfig } from '@/lib/site';
+import clsx from 'clsx';
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { useUser } from '@/Context/UserContext';
+import { logout } from '@/lib/logout';
+import { useRouter } from 'next/navigation';
+export default function Sidebar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(true);
+  const { user, setUser } = useUser(); // 👈 Access UserContext
+  const handleLogout = async () => {
+    await logout(setUser);
+    router.push('/login');
+  };
+
+  return (
+    <>
+      <button
+        className="md:hidden fixed top-4 left-4 z-50 bg-gray-900 text-white p-2 rounded shadow-lg"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
+      {isOpen && (
+  <div
+    onClick={() => setIsOpen(false)}
+    className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+  />
+)}
+
+
+<aside
+  className={clsx(
+    "fixed top-0 left-0 h-full bg-gray-900 text-white shadow-lg transition-transform duration-300 z-40",
+    {
+      "w-64 translate-x-0": isOpen,
+      "-translate-x-full": !isOpen,
+      "md:translate-x-0 md:w-64": true,
+    }
+  )}
+>
+
+        <div className="p-4 font-bold text-2xl border-b border-gray-700">
+          {siteConfig.name}
+        </div>
+
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+          {siteConfig.sidebarItems.map((item) => {
+            const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={clsx(
+                  "block px-4 py-2 rounded transition-all duration-200",
+                  {
+                    "bg-gray-700 text-white": isActive,
+                    "hover:bg-gray-800 hover:text-white text-gray-300": !isActive,
+                  }
+                )}
+              >
+                {item.title}
+              </Link>
+            );
+          })}
+
+          {user && (
+            <button
+              onClick={() => handleLogout()}
+              className="w-full text-left px-4 py-2 mt-4 rounded bg-red-600 hover:bg-red-700 transition-all"
+            >
+              🔓 Logout
+            </button>
+          )}
+        </nav>
+
+        <div className="p-4 text-sm text-gray-500 border-t border-gray-700">
+          {siteConfig.description}
+        </div>
+      </aside>
+    </>
+  );
+}
