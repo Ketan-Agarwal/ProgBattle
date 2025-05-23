@@ -34,18 +34,30 @@ export default function RegisterPage() {
       return;
     }
   
+    const registerPromise = register(email, password);
+  
     try {
-      await register(email, password);
-      toast.loading("Registering...");
-      toast.success("Registration successful! Check your email to verify your account.");
+      await toast.promise(
+        registerPromise,
+        {
+          loading: "Registering...",
+          success: "Registration successful! Check your email to verify your account.",
+          error: "Registration failed. Please check your details and try again.",
+        }
+      );
       setRegistered(true);
-    } catch (err: Object | any) {
-      if (err.status === 500) {
+    } catch (err: any) {
+      console.error("❌ Registration error:", err);
+      if (err?.status === 500) {
         setError("Server error: Please try again later.");
+      } else if (err?.response?.data?.detail) {
+        setError(err.response.data.detail);
+      } else {
+        setError("An unexpected error occurred.");
       }
-      toast.error("Registration failed: " + (err.response?.data?.detail || "Please check your details and try again."));
     }
   };
+  
     return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-4xl font-bold mb-10">ProgBattle</h1>
