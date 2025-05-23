@@ -18,6 +18,8 @@ from dependencies import get_db
 from models import Team, User
 
 import os
+from dotenv import load_dotenv
+load_dotenv()
 # Same as in your main file (ideally keep in config/env)
 SECRET_KEY = os.getenv("JWT_SECRET")
 ALGORITHM = "HS256"
