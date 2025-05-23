@@ -50,7 +50,7 @@ export default function Round2Page() {
   }, []);
 
   useEffect(() => {
-    const ws = new WebSocket(`ws://${process.env.NEXT_PUBLIC_WS_DOMAIN}/ws/logs`);
+    const ws = new WebSocket(`wss://${process.env.NEXT_PUBLIC_WS_DOMAIN}/ws/logs`);
 
     ws.onmessage = (event) => {
       const msg = JSON.parse(event.data);
