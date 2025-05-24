@@ -77,14 +77,19 @@ export default function Sidebar() {
             );
           })}
 
-          {user && (
+          {user ? (
             <button
               onClick={handleLogout}
               className="w-full text-left px-4 py-2 mt-4 rounded bg-red-600 hover:bg-red-700 transition-all"
             >
               🔓 Logout
             </button>
-          )}
+          ) : <Link
+          href="/login"
+          className="w-full text-left px-4 py-2 mt-4 rounded bg-blue-600 hover:bg-blue-700 transition-all"
+        >
+          🔓 Login
+        </Link>}
         </nav>
 
         <div className="p-4 text-sm text-gray-500 border-t border-gray-700">

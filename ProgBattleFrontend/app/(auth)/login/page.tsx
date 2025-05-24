@@ -56,6 +56,11 @@ export default function LoginPage() {
     }
         else if (err.status === 500) {
             setError('Server error: Please try again later.');
+        }
+        else if (err.status === 403) {
+          toast.error("Email Not Verified", {
+            description: "Check your inbox or spam folder"
+          })
         } else {
             setError('Login failed: ' + err.message);
         }
