@@ -65,7 +65,7 @@ def evaluate_match(submission_id, system_bot_id, match_num, user_bot_path):
         os.makedirs(logs_dir, exist_ok=True)
 
         result = subprocess.run([
-            "sudo", "docker", "run", "--rm",
+            "docker", "run", "--rm",
             "--mount", f"type=bind,source={os.path.abspath(temp_dir)},target=/app/bots",
             "--mount", f"type=bind,source={os.path.abspath(logs_dir)},target=/output",
             "bot-runner-1",
@@ -218,7 +218,7 @@ def evaluate_team_vs_team_match(match_id: str):
             os.makedirs(logs_dir, exist_ok=True)
 
             result = subprocess.run([
-                "sudo", "docker", "run", "--rm",
+                "docker", "run", "--rm",
                 "--mount", f"type=bind,source={os.path.abspath(temp_dir)},target=/app/bots",
                 "--mount", f"type=bind,source={os.path.abspath(logs_dir)},target=/output",
                 "bot-runner-1",
