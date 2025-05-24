@@ -62,8 +62,8 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()
     if not db_user or not bcrypt.verify(user.password, db_user.password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    if not db_user.is_verified:
-        raise HTTPException(status_code=403, detail="Email not verified. Please verify your email before logging in.")
+    # if not db_user.is_verified:
+    #     raise HTTPException(status_code=403, detail="Email not verified. Please verify your email before logging in.")
 
     # Create JWT token with user_id payload
     access_token = create_access_token(data={"user_id": db_user.id})

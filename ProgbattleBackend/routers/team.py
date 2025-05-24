@@ -12,7 +12,7 @@ router = APIRouter(prefix="/teams", tags=["Team"])
 class TeamCreate(BaseModel):
     name: str
     max_size: int = Field(..., ge=1, le=5)
-    team_password: str = Field(..., min_length=8)
+    team_password: str = Field(...)
 
 
 # Team creation

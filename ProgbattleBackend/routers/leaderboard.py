@@ -7,6 +7,11 @@ router = APIRouter()
 from typing import Optional
 
 
+@router.get("/")
+def root():
+    return {"message": "ProgBattle backend is running!"}
+
+
 @router.get("/submission/{submission_id}/status")
 def get_submission_status(submission_id: UUID, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     submission = db.query(Submission).filter_by(id=str(submission_id)).first()

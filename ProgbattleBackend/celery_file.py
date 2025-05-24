@@ -21,9 +21,9 @@ SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
 FRONTEND_URL = os.environ.get("FRONTEND_URL")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 serializer = URLSafeTimedSerializer(SECRET_KEY)
+REDIS_URL = os.environ.get("REDIS_URL")
 
-
-celery_app = Celery(__name__, broker="redis://localhost:6379/0", backend="redis://localhost:6379/0")
+celery_app = Celery(__name__, broker=REDIS_URL, backend=REDIS_URL)
 
 @celery_app.task
 def send_verification_email(email: str, token: str):

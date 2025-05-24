@@ -46,3 +46,22 @@ async def websocket_endpoint(websocket: WebSocket):
             await websocket.receive_text()
     except WebSocketDisconnect:
         manager.disconnect(websocket)
+
+
+from sqlalchemy.orm import Session
+from database import engine
+from dependencies import get_db
+import models
+from seed_data import populate_system_bots
+
+@app.on_event("startup")
+async def startup_event():
+    print("Server starting... Populating DB if needed...")
+    db: Session = next(get_db())
+
+    # Only seed if needed to avoid duplication
+    if not db.query(models.SystemBot).first():
+        populate_system_bots(db)  # <-- your logic here
+        print("✅ DB populated.")
+    else:
+        print("🟡 DB already populated.")

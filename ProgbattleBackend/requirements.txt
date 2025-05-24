@@ -20,7 +20,6 @@ itsdangerous==2.2.0
 kombu==5.5.3
 passlib==1.7.4
 prompt_toolkit==3.0.51
-psycopg2==2.9.10
 pyasn1==0.4.8
 pydantic==2.11.4
 pydantic_core==2.33.2
@@ -48,3 +47,4 @@ vine==5.1.0
 watchfiles==1.0.5
 wcwidth==0.2.13
 websockets==15.0.1
+psycopg2-binary

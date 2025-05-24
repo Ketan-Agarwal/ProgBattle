@@ -85,6 +85,9 @@ const handleCreateTeam = async () => {
     if (err.status === 400) {
       setError("Team name already exists.");
     }
+    else if (err.status === 422) {
+      setError("Invalid team size. Please select a valid size. OR Team Password min length 8.");
+    }
   } finally {
     setLoading(false);
   }
