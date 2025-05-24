@@ -110,6 +110,7 @@ def evaluate_match(submission_id, system_bot_id, match_num, user_bot_path):
 def finalize_score(match_results_data, submission_id, team_id):
     db: Session = SessionLocal()
     try:
+        print(f"Received match results: {match_results_data}")
         submission = db.query(Submission).filter_by(id=submission_id).first()
         if not submission:
             raise Exception("Invalid submission ID.")
