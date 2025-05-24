@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/apiv1/(.*)",
+        "destination": "https://progback.zapto.org/$1"
+      }
+    ]
+  }
+  
