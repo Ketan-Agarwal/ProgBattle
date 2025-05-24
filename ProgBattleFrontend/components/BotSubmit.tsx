@@ -94,56 +94,54 @@ export default function BotSubmitForm({ onSubmit }: BotSubmitFormProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-3xl font-semibold mb-2">Submit Your Bot</h2>
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <Input
-          type="text"
-          placeholder="Bot Name"
-          value={botName}
-          onChange={(e) => setBotName(e.target.value)}
-          className=" placeholder-gray-400"
-        />
+<div className="space-y-6 max-w-4xl mx-auto px-4 sm:px-6">
+  <h2 className="text-2xl sm:text-3xl font-semibold mb-2">Submit Your Bot</h2>
+  <form onSubmit={handleSubmit} className="space-y-4">
+    <Input
+      type="text"
+      placeholder="Bot Name"
+      value={botName}
+      onChange={(e) => setBotName(e.target.value)}
+      className="placeholder-gray-400 w-full"
+    />
+    <Input
+      ref={fileInputRef}
+      id="python"
+      type="file"
+      accept=".py"
+      onChange={handleFileUpload}
+      className="w-full"
+    />
 
-        <Input
-          ref={fileInputRef}
-          id="python"
-          type="file"
-          accept=".py"
-          onChange={handleFileUpload}
-        />
+    {file && (
+      <p className="text-sm">📎 File loaded — edits in editor will override it.</p>
+    )}
 
-        {file && (
-          <p className="text-sm ">
-            Uploaded file loaded into editor. Any edits will override the file content.
-          </p>
-        )}
-
-        <Editor
-          height="400px"
-          language="python"
-          theme="vs-dark"
-          value={code}
-          onChange={(newCode) => setCode(newCode || '')}
-          options={{
-            minimap: { enabled: false },
-            fontSize: 14,
-            fontFamily: 'Fira Code, monospace',
-            scrollbar: {
-              verticalScrollbarSize: 6,
-              horizontalScrollbarSize: 6,
-            },
-          }}
-        />
-
-        <Button type="submit" className="w-full mt-2">Submit Bot</Button>
-
-        {status && (
-          <p className={`text-sm mt-2 ${status.startsWith('✅') ? 'text-green-400' : 'text-red-400'}`}>
-            {status}
-          </p>
-        )}
-      </form>
+    <div className="w-full h-[50vh]">
+      <Editor
+        height="100%"
+        language="python"
+        theme="vs-dark"
+        value={code}
+        onChange={(newCode) => setCode(newCode || '')}
+        options={{
+          minimap: { enabled: false },
+          fontSize: 13,
+          fontFamily: 'Fira Code, monospace',
+          automaticLayout: true,
+          scrollBeyondLastLine: false,
+        }}
+      />
     </div>
+
+    <Button type="submit" className="w-full sm:w-auto mt-2">🚀 Submit Bot</Button>
+
+    {status && (
+      <p className={`text-sm mt-2 ${status.startsWith('✅') ? 'text-green-500' : 'text-red-500'}`}>
+        {status}
+      </p>
+    )}
+  </form>
+</div>
   );
 }

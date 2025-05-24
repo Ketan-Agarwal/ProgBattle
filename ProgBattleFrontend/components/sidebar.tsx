@@ -9,11 +9,13 @@ import { Menu, X } from 'lucide-react';
 import { useUser } from '@/Context/UserContext';
 import { logout } from '@/lib/logout';
 import { useRouter } from 'next/navigation';
+
 export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(true);
-  const { user, setUser } = useUser(); // 👈 Access UserContext
+  const [isOpen, setIsOpen] = useState(false); // Closed by default for mobile
+  const { user, setUser } = useUser();
+
   const handleLogout = async () => {
     await logout(setUser);
     router.push('/login');
@@ -21,6 +23,7 @@ export default function Sidebar() {
 
   return (
     <>
+      {/* Toggle Button */}
       <button
         className="md:hidden fixed top-4 left-4 z-50 bg-gray-900 text-white p-2 rounded shadow-lg"
         onClick={() => setIsOpen(!isOpen)}
@@ -28,42 +31,44 @@ export default function Sidebar() {
         {isOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
+      {/* Backdrop for mobile */}
       {isOpen && (
-  <div
-    onClick={() => setIsOpen(false)}
-    className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
-  />
-)}
+        <div
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+        />
+      )}
 
-
-<aside
-  className={clsx(
-    "fixed top-0 left-0 h-full bg-gray-900 text-white shadow-lg transition-transform duration-300 z-40",
-    {
-      "w-64 translate-x-0": isOpen,
-      "-translate-x-full": !isOpen,
-      "md:translate-x-0 md:w-64": true,
-    }
-  )}
->
-
+      {/* Sidebar */}
+      <aside
+        className={clsx(
+          'fixed top-0 left-0 h-full bg-gray-900 text-white shadow-lg transition-transform duration-300 z-40 w-64',
+          {
+            'translate-x-0': isOpen,
+            '-translate-x-full': !isOpen,
+            'md:translate-x-0': true, // Always visible on desktop
+          }
+        )}
+      >
         <div className="p-4 font-bold text-2xl border-b border-gray-700">
           {siteConfig.name}
         </div>
 
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+        <nav className="flex flex-col flex-1 p-4 space-y-2 overflow-y-auto">
           {siteConfig.sidebarItems.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+            const isActive =
+              pathname === item.href || pathname.startsWith(item.href + '/');
 
             return (
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => setIsOpen(false)} // Auto-close on click (mobile)
                 className={clsx(
-                  "block px-4 py-2 rounded transition-all duration-200",
+                  'block px-4 py-2 rounded transition-all duration-200',
                   {
-                    "bg-gray-700 text-white": isActive,
-                    "hover:bg-gray-800 hover:text-white text-gray-300": !isActive,
+                    'bg-gray-700 text-white': isActive,
+                    'hover:bg-gray-800 hover:text-white text-gray-300': !isActive,
                   }
                 )}
               >
@@ -74,7 +79,7 @@ export default function Sidebar() {
 
           {user && (
             <button
-              onClick={() => handleLogout()}
+              onClick={handleLogout}
               className="w-full text-left px-4 py-2 mt-4 rounded bg-red-600 hover:bg-red-700 transition-all"
             >
               🔓 Logout
