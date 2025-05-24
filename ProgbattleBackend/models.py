@@ -15,7 +15,7 @@ class User(Base):
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     team_id = Column(String, ForeignKey("teams.id"), nullable=True)
-    registered_at = Column(DateTime, default=datetime.utcnow)
+    registered_at = Column(DateTime, default=datetime.now())
     is_verified = Column(Boolean, default=False)
 
     team = relationship("Team", back_populates="members")
@@ -30,7 +30,7 @@ class Team(Base):
 
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     name = Column(String, unique=True, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now())
     max_size = Column(Integer, default=5)
     members = relationship("User", back_populates="team")
     submissions = relationship("Submission", back_populates="team", foreign_keys="[Submission.team_id]")
@@ -49,7 +49,7 @@ class Submission(Base):
     team_id = Column(String, ForeignKey("teams.id"), nullable=False)
     bot_name = Column(String, nullable=False)
     score = Column(Float, default=0.0)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now())
     status = Column(String, default="pending")
 
     user = relationship("User", back_populates="submissions")
@@ -66,7 +66,7 @@ class SystemBot(Base):
     name = Column(String, unique=True, nullable=False)
     file_path = Column(String, nullable=False)
     weight = Column(Float, default=1.0)  # score importance
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now())
 
     def __repr__(self):
         return f"<SystemBot {self.name}>"
