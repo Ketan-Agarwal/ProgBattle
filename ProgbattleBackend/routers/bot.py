@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from dependencies import get_db, get_current_user, check_submission_rate_limit
 from models import Submission
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import uuid
 import os
 
@@ -33,7 +34,7 @@ def submit_bot(file: UploadFile = File(...), bot_name: str = Form(...), db: Sess
         bot_name=bot_name,
         user_id=current_user.id,
         team_id=current_user.team_id,
-        created_at=datetime.now(),
+        created_at = datetime.now(ZoneInfo("Asia/Kolkata")),
         score=None,  # to be updated later
         status="pending",
     )
