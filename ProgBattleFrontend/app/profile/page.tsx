@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/apiClient";
 import ProfileCard from "@/components/ProfileCard";
+import { toast } from "sonner";
 
 export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
@@ -19,6 +20,7 @@ export default function ProfilePage() {
       } catch (err) {
         console.error("Auth failed:", err);
         router.push("/login");
+        toast.error("Failed to load profile. Please log in.");
       } finally {
         setLoading(false);
       }

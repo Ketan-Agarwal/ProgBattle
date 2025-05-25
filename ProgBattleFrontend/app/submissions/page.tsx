@@ -2,6 +2,7 @@
 import { SubmissionsTable } from "@/components/SubmissionTable";
 import { useEffect } from "react";
 import { useUser } from "@/Context/UserContext";
+import { toast } from "sonner";
 export default function SubmissionsPage() {
     const { user } = useUser();
 
@@ -9,6 +10,7 @@ export default function SubmissionsPage() {
         const isLoggedIn = user && user.email;
         if (!isLoggedIn) {
             window.location.href = "/login";
+            toast.error("Please login to submit bots and view submissions.");
         }
     }, []);
 

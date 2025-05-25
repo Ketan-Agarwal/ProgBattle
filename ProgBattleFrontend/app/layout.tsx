@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <UserProvider>
         {showSidebar && <Sidebar />}
         <section className="flex-1">{children}</section>
-        <Toaster />
+        <Toaster richColors position="bottom-center"/>
         </UserProvider>
 
       </body>

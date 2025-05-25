@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import {
   Dialog,
   DialogContent,
@@ -75,6 +74,15 @@ const handleCreateTeam = async () => {
     return;
   }
 
+  if (teamSize < 1 || teamSize > 5) {
+    toast.error("Team size must be between 1 and 5.");
+    return;
+  }
+  if (teamPassword.length < 8) {
+    toast.error("Team password must be at least 8 characters long.");
+    return;
+  }
+
   try {
     setLoading(true);
     const data = await createTeam(newTeamName, teamSize, teamPassword); // Updated call
@@ -83,10 +91,12 @@ const handleCreateTeam = async () => {
   } catch (err: any) {
     console.error("Error creating team:", err.status);
     if (err.status === 400) {
-      setError("Team name already exists.");
+      // setError("Team name already exists.");
+      toast.error("Team name already exists. Please choose a different name.");
     }
     else if (err.status === 422) {
-      setError("Invalid team size. Please select a valid size. OR Team Password min length 8.");
+      // setError("Invalid team size. Please select a valid size. OR Team Password min length 8.");
+      toast.error("Invalid team size. Please select a valid size. OR Team Password min length 8.");
     }
   } finally {
     setLoading(false);
@@ -146,12 +156,12 @@ const handleCreateTeam = async () => {
 
                     <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="password" className="text-right">
-                      Team Password
+                      Team Password (min 8 chars)
                     </Label>
                     <Input
                       id="password"
                       type="password"
-                      placeholder="Password"
+                      placeholder="Password, at least 8 characters"
                       className="col-span-3"
                       value={teamPassword}
                       onChange={(e) => setTeamPassword(e.target.value)}

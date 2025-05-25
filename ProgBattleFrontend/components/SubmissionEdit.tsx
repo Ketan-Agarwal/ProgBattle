@@ -15,6 +15,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { getSubmission, submitBot } from "@/lib/api";
 import { useUser } from "@/Context/UserContext";
+import { toast } from 'sonner';
 
 interface SubmissionDialogProps {
   submission_id: string;
@@ -42,6 +43,7 @@ export function SubmissionDialog({ submission_id, open, setOpen }: SubmissionDia
       } catch (err) {
         console.error(err);
         setStatus("❌ Failed to load submission.");
+        
       }
     };
 

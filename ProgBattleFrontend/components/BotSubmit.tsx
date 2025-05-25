@@ -6,6 +6,7 @@ import { submitBot } from '@/lib/api';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { useUser }  from '@/Context/UserContext';
+import { toast } from 'sonner';
 interface BotSubmitFormProps {
   onSubmit: (id: string) => void;
 }
@@ -39,12 +40,14 @@ export default function BotSubmitForm({ onSubmit }: BotSubmitFormProps) {
     if (e) e.preventDefault();
 
     if (!botName.trim()) {
-      setStatus('⚠️ Bot name is required.');
+      // setStatus('⚠️ Bot name is required.');
+      toast.warning('Bot name is required.');
       return;
     }
 
     if (!code.trim()) {
-      setStatus('⚠️ Code is required.');
+      // setStatus('⚠️ Code is required.');
+      toast.warning('Code is required.');
       return;
     }
     try {
@@ -55,18 +58,21 @@ export default function BotSubmitForm({ onSubmit }: BotSubmitFormProps) {
       formData.append('bot_name', botName);
 
       if (!user) {
-        setStatus('Please Login to submit a bot.');
+        // setStatus('Please Login to submit a bot.');
+        toast.error('Please Login to submit a bot.');
         return;
       };
       if (user && !user.team_id) {
-        setStatus('Please join a team to submit a bot.');
+        // setStatus('Please join a team to submit a bot.');
+        toast.error('Please join a team to submit a bot.');
         return;
       }
       
 
       const submit = await submitBot(formData);
       onSubmit(submit.submission_id);
-      setStatus('✅ Bot submitted successfully!');
+      // setStatus('✅ Bot submitted successfully!');
+      toast.success('Bot submitted successfully!');
 
       // Reset form state after successful submission
       setBotName('');
@@ -79,16 +85,18 @@ export default function BotSubmitForm({ onSubmit }: BotSubmitFormProps) {
     } catch (err: any) {
       console.error(err);
       if (err.status === 401) {
-        setStatus('Unauthorized. Please log in.');
+        // setStatus('Unauthorized. Please log in.');
+        toast.error('Unauthorized. Please log in.');
       } else if (err.status === 400) {
         console.log(err.response.data?.detail)
-        setStatus(err.response.data?.detail || 'Bad request. Please check your input.');
-        
+        // setStatus(err.response.data?.detail || 'Bad request. Please check your input.');
+        toast.error(err.response.data?.detail || 'Bad request. Please check your input.');
       } else if (err.status === 429) {
-          setStatus(err.response.data?.detail || 'Rate limit exceeded. Please try again later.');
-        
+          // setStatus(err.response.data?.detail || 'Rate limit exceeded. Please try again later.');
+          toast.error(err.response.data?.detail || 'Rate limit exceeded. Please try again later.');
       } else {
-        setStatus('Failed to submit bot.');
+        // setStatus('Failed to submit bot.');
+        toast.error('Failed to submit bot. Please try again later.');
       }
     }
   };

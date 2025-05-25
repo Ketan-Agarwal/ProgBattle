@@ -22,12 +22,15 @@ export default function LoginPage() {
     setError(''); // Clear previous errors
 
     if (!isValidEmail(email)) {
-      setError('Please enter a valid email address.');
+
+      // setError('Please enter a valid email address.');
+      toast.error("Please enter a valid email address.");
       return; // Stop here, no network call
     }
 
     if (!password) {
-      setError('Password cannot be empty.');
+      // setError('Password cannot be empty.');
+      toast.error("Password cannot be empty.");
       return;
     }
 
@@ -55,14 +58,22 @@ export default function LoginPage() {
       });
     }
         else if (err.status === 500) {
-            setError('Server error: Please try again later.');
+            // setError('Server error: Please try again later.');
+            toast.error("Server error: Please try again later.");
         }
         else if (err.status === 403) {
           toast.error("Email Not Verified", {
             description: "Check your inbox or spam folder"
           })
         } else {
-            setError('Login failed: ' + err.message);
+            // setError('Login failed: ' + err.message);
+            toast.error("Login failed: " + err.message, {
+              description: "Please check your details and try again.",
+              action: {
+                label: "Retry",
+                onClick: () => handleLogin(),
+              },
+            });
         }
         }
   };

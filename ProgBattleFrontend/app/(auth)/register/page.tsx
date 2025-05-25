@@ -19,17 +19,20 @@ export default function RegisterPage() {
     setError('');
   
     if (!isValidEmail(email)) {
-      setError("Please enter a valid email address.");
+      // setError("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       return;
     }
   
     if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
+      // setError("Password must be at least 6 characters.");
+      toast.error("Password must be at least 6 characters.");
       return;
     }
   
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      // setError("Passwords do not match.");
+      toast.error("Passwords do not match.");
       return;
     }
   
@@ -45,13 +48,13 @@ export default function RegisterPage() {
       console.error("❌ Registration error:", err);
   
       if (err?.response?.status === 500) {
-        setError("Server error: Please try again later.");
+        // setError("Server error: Please try again later.");
         toast.error("Server error. Try again later.");
       } else if (err?.response?.data?.detail) {
         // setError(err.response.data.detail);
         toast.error(err.response.data.detail);
       } else {
-        setError("An unexpected error occurred.");
+        // setError("An unexpected error occurred.");
         toast.error("Unexpected error.");
       }
     }

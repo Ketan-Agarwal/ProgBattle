@@ -36,6 +36,7 @@ export function LogsTable({ submission_id }: { submission_id: string }) {
       } catch (err: any) {
         if (err.status === 404) {
           setError("No logs found for this submission.");
+          
         } else {
         setError("Could not load logs.");
         console.error("Failed to fetch logs:", err);
