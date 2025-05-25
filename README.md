@@ -16,7 +16,7 @@ This is a full-stack system for running bot tournaments with live updates, backg
 
 🔗 [Hosted Application](https://progbattle.vercel.app)  
 🎥 [Walkthrough Video](https://youtu.be/W0XaopZ6cWU)
-
+(There has been so UI improvements after recording the walthrough, therefore elements may look a bit different in styling from current website)
 ## Tech Stack
 
 - **Frontend:** Next.js (React)
@@ -58,7 +58,6 @@ ProgbattleBackend/
 ├── .env
 ├── requirements.txt
 ├── rundb.py
-├── asdfef.py
 ├── dependencies.py
 ├── r2.py
 ├── celery_file.py
@@ -114,6 +113,12 @@ ProgBattleFrontend/
 ├── ├── LeaderboardR2.tsx
 ├── ├── BotSubmit.tsx
 ├── ├── LastSubmission.tsx
+├── ├── ProfileCard.tsx
+├── ├── TeamList.tsx
+├── ├── LogsTable.tsx
+├── ├── inputfile.tsx
+├── ├── sidebar.tsx
+├── ├── leaderboard.tsx
 ├── ├── ui/
 ├── ├── ├── alert-dialog.tsx
 ├── ├── ├── dialog.tsx
@@ -125,12 +130,6 @@ ProgBattleFrontend/
 ├── ├── ├── select.tsx
 ├── ├── ├── input.tsx
 ├── ├── ├── button.tsx
-├── ├── ProfileCard.tsx
-├── ├── TeamList.tsx
-├── ├── LogsTable.tsx
-├── ├── inputfile.tsx
-├── ├── sidebar.tsx
-├── ├── leaderboard.tsx
 ├── lib/
 ├── ├── apiClient.ts
 ├── ├── site.ts

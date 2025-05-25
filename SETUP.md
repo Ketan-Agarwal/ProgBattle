@@ -16,18 +16,18 @@ cd ProgBattle
 ```
 cp backend.env ProgbattleBackend/.env
 ```
-Modify variables after that.
+Modify required variables.
 
 
 ### Frontend
 ```
 cp frontend.env ProgBattleFrontend/.env
 ```
-Modify required variables
+Modify required variables.
 
 ## 3. Create a venv for celery
 
-> Didn't used celery in docker cause celery will itself run docker containers to run `engine.py`.
+> Didn't used celery in docker because celery will itself run docker containers to run bot battles.
 ```bash
 cd ./ProgbattleBackend
 python3 -m venv venv
@@ -44,11 +44,16 @@ celery -A celery_file worker --loglevel=info
 Leave this terminal running.
 
 
-
-## 4. Spin up docker containers
+## 4. Create Bot Runner Docker Image
 
 ```bash
-docker compose up --build
+docker build -t bot-runner-1 ./ProgbattleBackend/docker/
+```
+
+## 5. Spin up docker containers
+
+```bash
+docker compose up --build  # make sure you are in root of repo where docker-compose.yml file exist.
 ```
 
 This starts 

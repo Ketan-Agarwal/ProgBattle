@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false); // Closed by default for mobile
+  const [isOpen, setIsOpen] = useState(false);
   const { user, setUser } = useUser();
 
   const handleLogout = async () => {
@@ -27,7 +27,6 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Toggle Button */}
       <button
         className="md:hidden fixed top-4 left-4 z-50 bg-gray-900 text-white p-2 rounded shadow-lg"
         onClick={() => setIsOpen(!isOpen)}
@@ -36,12 +35,6 @@ export default function Sidebar() {
       </button>
 
       {/* Backdrop for mobile */}
-      {isOpen && (
-        <div
-          onClick={() => setIsOpen(false)}
-          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
-        />
-      )}
 
       {/* Sidebar */}
       <aside

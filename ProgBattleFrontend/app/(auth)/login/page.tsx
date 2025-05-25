@@ -51,10 +51,6 @@ export default function LoginPage() {
     
     toast.error("Login failed", {
         description: err.response.data.detail || "Please check your details and try again.",
-        action: {
-          label: "Retry",
-          onClick: () => handleLogin(),
-        },
       });
     }
         else if (err.status === 500) {
