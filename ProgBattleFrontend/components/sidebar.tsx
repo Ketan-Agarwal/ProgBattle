@@ -9,6 +9,7 @@ import { Menu, X } from 'lucide-react';
 import { useUser } from '@/Context/UserContext';
 import { logout } from '@/lib/logout';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function Sidebar() {
   const router = useRouter();
@@ -19,6 +20,9 @@ export default function Sidebar() {
   const handleLogout = async () => {
     await logout(setUser);
     router.push('/login');
+    toast.success('Logged out successfully', {
+      description: 'You have been logged out. See you next time!',
+    });
   };
 
   return (
