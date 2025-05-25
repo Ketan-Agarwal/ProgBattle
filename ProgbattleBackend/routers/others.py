@@ -130,7 +130,8 @@ def start_round_2(db: Session = Depends(get_db), current_user=Depends(get_curren
     # Check if the user is an admin
     if not current_user.email.endswith("@admin.com"):
         raise HTTPException(status_code=403, detail="Only admins can start round 2.")
-
+    if not current_user.is_verified:
+        raise HTTPException(status_code=403, detail="Admin email not verified.")
     # Check if round 2 has already started
     if db.query(Round2Match).count() > 0:
         raise HTTPException(status_code=400, detail="Round 2 has already started.")

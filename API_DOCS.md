@@ -9,6 +9,8 @@ This document explains all the API helper functions used to communicate with the
 #### Base URL for `https://progbattle.vercel.app` is `https://progbattle.vercel.app/apiv1` or `https://progback.zapto.org`
 
 
+## First use /user/login to login and use authenticated routes.
+
 ## Round 2 (R2)
 
 ### Start Round 2
@@ -18,6 +20,12 @@ Start Round 2 of the tournament. Only accessible by admin users.
 - Method: POST
 - Endpoint: `/start-round-2`
 - Authorization: Admin-only
+
+admin creds: 
+
+email: admin@admin.com
+password: admin124
+
 
 Response:
 ```json
