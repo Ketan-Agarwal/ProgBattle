@@ -3,8 +3,10 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { verifyEmail } from "@/lib/api";
-
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 function VerifyEmailClient() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
@@ -20,6 +22,8 @@ function VerifyEmailClient() {
       try {
         const data = await verifyEmail(token);
         setMessage(data.message || "Email verified successfully.");
+        router.push("/login");
+        toast.success("Email verified successfully. You can now log in.");
       } catch (e: any) {
         console.error("Verification error:", e);
         setMessage(
