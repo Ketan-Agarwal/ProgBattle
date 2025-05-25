@@ -6,7 +6,7 @@ This document explains all the API helper functions used to communicate with the
 
 
 #### Base URL: `http://localhost:8000`
-#### Base URL for `https://progbattle.vercel.app` is `https://progbattle.vercel.app/apiv1` or `https://progback.zapto.org`
+#### Base URL for `https://progbattle.vercel.app` is `https://progback.zapto.org`
 
 
 ## First use `/user/login` to login account and then use authenticated routes.
