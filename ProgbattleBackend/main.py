@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from database import engine
 from models import Base
 # from routers import bot, leaderboard, team, user
-from routers import user_router, team_router, bot_router, leaderboard_router
+from routers import user_router, team_router, bot_router, other_router
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from wsfile import manager
@@ -36,7 +36,7 @@ app.include_router(bot_router)
 app.include_router(user_router)
 app.include_router(team_router)
 app.include_router(bot_router)
-app.include_router(leaderboard_router)
+app.include_router(other_router)
 
 @app.websocket("/ws/logs")
 async def websocket_endpoint(websocket: WebSocket):
