@@ -61,7 +61,13 @@ export default function LoginPage() {
           toast.error("Email Not Verified", {
             description: "Check your inbox or spam folder"
           })
-        } else {
+        }
+        else if (err.status === 422) {
+            // setError('Invalid input: Please check your email and password.');
+            toast.error("Invalid input: Please check your email and password.");
+
+        }
+        else {
             // setError('Login failed: ' + err.message);
             toast.error("Login failed: " + err.message, {
               description: "Please check your details and try again.",
