@@ -35,15 +35,15 @@ export default function RegisterPage() {
     }
   
     try {
-      await toast.promise(
-        register(email, password),
-        {
-          loading: "Registering...",
-          success: "Registration successful! Check your email to verify your account.",
-          error: "Registration failed. Please check your details and try again.",
-        }
-      );
+      const res = await toast.promise(register(email, password), {
+        loading: "Registering...",
+        success: "Registration successful! Check your email to verify your account.",
+        error: "Registration failed. Please check your details and try again.",
+      });
+    
+      // If register throws, the code below won't run
       setRegistered(true);
+    
     } catch (err: any) {
       console.error("❌ Registration error:", err);
       if (err?.status === 500) {
@@ -54,8 +54,7 @@ export default function RegisterPage() {
         setError("An unexpected error occurred.");
       }
     }
-    
-  };
+      };
   
     return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -96,11 +95,10 @@ export default function RegisterPage() {
         Register
       </button>
 
-      {/* 👇 Added login link */}
       <div className="mt-4 text-sm">
         <p>
           Already have an account?{' '}
-          <Link href="/login" className="text-blue-600 underline">
+          <Link href="/login" className="text-blue-600 hover:underline">
             Login here
           </Link>
         </p>
