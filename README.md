@@ -28,3 +28,115 @@ This is a full-stack system for running bot tournaments with live updates, backg
 
 - [Setup Instructions](./SETUP.md)
 - [API Reference](./API_DOCS.md)
+
+## Folder Structure
+
+### Backend
+```
+ProgbattleBackend/
+├── seed_data.py
+├── main.py
+├── bots/
+├── ├── bot1.py
+├── ├── bot2.py
+├── ├── bot3.py
+├── ├── bot4.py
+├── loadSysBots.py
+├── database.py
+├── Dockerfile
+├── .gitignore
+├── r2_fns.py
+├── sendmail.py
+├── routers/
+├── ├── leaderboard.py
+├── ├── team.py
+├── ├── user.py
+├── ├── bot.py
+├── ├── __init__.py
+├── wsfile.py
+├── models.py
+├── .env
+├── requirements.txt
+├── rundb.py
+├── asdfef.py
+├── dependencies.py
+├── r2.py
+├── celery_file.py
+├── docker/
+├── ├── engine/
+├── ├── ├── engine.py
+├── ├── Dockerfile
+├── ├── entrypoint.sh
+
+```
+
+
+### Frontend
+
+```
+ProgBattleFrontend/
+├── app/
+├── ├── leaderboard/
+├── ├── ├── page.tsx
+├── ├── api/
+├── ├── ├── logout/
+├── ├── ├── ├── route.ts
+├── ├── globals.css
+├── ├── leaderboard2/
+├── ├── ├── page.tsx
+├── ├── dashboard/
+├── ├── ├── page.tsx
+├── ├── layout.tsx
+├── ├── teams/
+├── ├── ├── page.tsx
+├── ├── page.tsx
+├── ├── favicon.ico
+├── ├── (auth)/
+├── ├── ├── verify-email/
+├── ├── ├── ├── page.tsx
+├── ├── ├── login/
+├── ├── ├── ├── page.tsx
+├── ├── ├── register/
+├── ├── ├── ├── page.tsx
+├── ├── profile/
+├── ├── ├── page.tsx
+├── Dockerfile
+├── .gitignore
+├── Context/
+├── ├── UserContext.tsx
+├── .env.local
+├── components/
+├── ├── GameReplay.tsx
+├── ├── SubmissionEdit.tsx
+├── ├── SubmissionTable.tsx
+├── ├── PasswordDialog.tsx
+├── ├── DashboardLayout.tsx
+├── ├── LeaderboardR2.tsx
+├── ├── BotSubmit.tsx
+├── ├── LastSubmission.tsx
+├── ├── ui/
+├── ├── ├── alert-dialog.tsx
+├── ├── ├── dialog.tsx
+├── ├── ├── dropdown-menu.tsx
+├── ├── ├── label.tsx
+├── ├── ├── checkbox.tsx
+├── ├── ├── sonner.tsx
+├── ├── ├── table.tsx
+├── ├── ├── select.tsx
+├── ├── ├── input.tsx
+├── ├── ├── button.tsx
+├── ├── ProfileCard.tsx
+├── ├── TeamList.tsx
+├── ├── LogsTable.tsx
+├── ├── inputfile.tsx
+├── ├── sidebar.tsx
+├── ├── leaderboard.tsx
+├── lib/
+├── ├── apiClient.ts
+├── ├── site.ts
+├── ├── utils.ts
+├── ├── api.ts
+├── ├── logout.ts
+├── next.config.ts
+
+```

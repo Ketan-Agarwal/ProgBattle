@@ -15,7 +15,6 @@ export default function RegisterPage() {
   const isValidEmail = (email: string) => {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   };
-
   const handleRegister = async () => {
     setError('');
   
@@ -35,26 +34,29 @@ export default function RegisterPage() {
     }
   
     try {
-      const res = await toast.promise(register(email, password), {
-        loading: "Registering...",
-        success: "Registration successful! Check your email to verify your account.",
-        error: "Registration failed. Please check your details and try again.",
-      });
-    
-      // If register throws, the code below won't run
+      toast.loading("Registering...");
+      const res = await register(email, password); // must throw on 400s/500s
+  
+      toast.dismiss(); // remove loading
+      toast.success("Registration successful! Check your email to verify your account.");
       setRegistered(true);
-    
     } catch (err: any) {
+      toast.dismiss(); // remove loading
       console.error("❌ Registration error:", err);
-      if (err?.status === 500) {
+  
+      if (err?.response?.status === 500) {
         setError("Server error: Please try again later.");
+        toast.error("Server error. Try again later.");
       } else if (err?.response?.data?.detail) {
-        setError(err.response.data.detail);
+        // setError(err.response.data.detail);
+        toast.error(err.response.data.detail);
       } else {
         setError("An unexpected error occurred.");
+        toast.error("Unexpected error.");
       }
     }
-      };
+  };
+  
   
     return (
     <div className="flex flex-col items-center justify-center h-screen">
