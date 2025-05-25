@@ -36,7 +36,7 @@ export default function LoginPage() {
 
     try {
       const data = await login(email, password);
-      toast("Login successful!", {
+      toast.success("Login successful!", {
         description: "Redirecting to profile page...",
       });
       setTimeout(() => {
@@ -49,7 +49,7 @@ export default function LoginPage() {
         if (err.status === 401) {
       // setError('Unauthorized: Invalid email or password.');
     
-    toast("Login failed", {
+    toast.error("Login failed", {
         description: err.response.data.detail || "Please check your details and try again.",
         action: {
           label: "Retry",
