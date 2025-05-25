@@ -34,11 +34,9 @@ export default function RegisterPage() {
       return;
     }
   
-    const registerPromise = register(email, password);
-  
     try {
       await toast.promise(
-        registerPromise,
+        register(email, password),
         {
           loading: "Registering...",
           success: "Registration successful! Check your email to verify your account.",
@@ -56,6 +54,7 @@ export default function RegisterPage() {
         setError("An unexpected error occurred.");
       }
     }
+    
   };
   
     return (
