@@ -35,15 +35,6 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Now we can run worker like
-
-```bash
-celery -A celery_file worker --loglevel=info
-```
-
-Leave this terminal running.
-
-
 ## 4. Create Bot Runner Docker Image
 
 ```bash
@@ -53,17 +44,28 @@ docker build -t bot-runner-1 ./ProgbattleBackend/docker/
 ## 5. Spin up docker containers
 
 ```bash
-docker compose up --build  # make sure you are in root of repo where docker-compose.yml file exist.
+docker compose up --build -d # make sure you are in root of repo where docker-compose.yml file exist.
 ```
+> Make sure service ports are not in use.
 
 This starts 
 - FastAPI backend (localhost:8000)
 - PostgreSQL DB
 - Redis (for task queue)
 
+Now we can run worker like
+
+```bash
+celery -A celery_file worker --loglevel=info
+```
+
+Leave this terminal running.
+
+
 ## 5. Start Frontend
 
 ```bash
 cd ./ProgBattleFrontend
+npm install
 npm run dev
 ```

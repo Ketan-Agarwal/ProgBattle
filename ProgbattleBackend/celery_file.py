@@ -21,28 +21,31 @@ SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
 FRONTEND_URL = os.environ.get("FRONTEND_URL")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 serializer = URLSafeTimedSerializer(SECRET_KEY)
-REDIS_URL = os.environ.get("REDIS_URL")
+REDIS_URL = "redis://localhost:6379/0"
 
 celery_app = Celery(__name__, broker=REDIS_URL, backend=REDIS_URL)
 
-@celery_app.task
-def send_verification_email(email: str, token: str):
-    print(f"Sending verification email to {email}")
-    print(f"user: {SMTP_USER}")
-    link = f"{FRONTEND_URL}/verify-email?token={token}"
-    message = EmailMessage()
-    message.set_content(f"Click the link to verify your email: {link}")
-    message["Subject"] = "Verify your email"
-    message["From"] = "ProgBattle <verify@progbattle.pclub>"
-    message["To"] = email
+@celery_app.task(bind=True, ignore_result=True)
+def send_verification_email(self, email: str, token: str):
+    try:
+        print(f"Sending verification email to {email}")
+        print(f"user: {SMTP_USER}")
+        link = f"{FRONTEND_URL}/verify-email?token={token}"
+        message = EmailMessage()
+        message.set_content(f"Click the link to verify your email: {link}")
+        message["Subject"] = "Verify your email"
+        message["From"] = "ProgBattle <verify@progbattle.pclub>"
+        message["To"] = email
 
-    with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
-        smtp.starttls()
-        smtp.login(SMTP_USER, SMTP_PASSWORD)
-        smtp.send_message(message)
-    
-    print(f"Verification email sent to {email}")
+        with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
+            smtp.starttls()
+            smtp.login(SMTP_USER, SMTP_PASSWORD)
+            smtp.send_message(message)
 
+        print(f"Verification email sent to {email}")
+    except Exception as e:
+        print(f"[ERROR] Failed to send verification email to {email}: {e}")
+        # You can also log this instead of print if using a logger
 
 @celery_app.task
 def evaluate_match(submission_id, system_bot_id, match_num, user_bot_path):
